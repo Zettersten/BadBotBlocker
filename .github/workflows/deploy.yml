@@ -1,4 +1,4 @@
-name: "Deploy VeeFriends Characters SDK"
+name: "Deploy BadBotBlocker"
 
 on:
   push:

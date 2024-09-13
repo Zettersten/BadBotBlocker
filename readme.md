@@ -1,4 +1,4 @@
-![BadBotBlocker Icon](https://raw.githubusercontent.com/zettersten/BadBotBlocker/main/logo.png)
+![BadBotBlocker Icon](https://raw.githubusercontent.com/Zettersten/BadBotBlocker/main/icon.png)
 
 # BadBotBlocker 🛡️
 

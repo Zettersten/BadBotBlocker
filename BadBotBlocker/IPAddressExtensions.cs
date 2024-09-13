@@ -5,7 +5,11 @@ namespace BadBotBlocker;
 
 internal static class IPAddressExtensions
 {
-    internal static bool IsInSubnet(this IPAddress address, IPAddress subnetAddress, int prefixLength)
+    internal static bool IsInSubnet(
+        this IPAddress address,
+        IPAddress subnetAddress,
+        int prefixLength
+    )
     {
         if (address.AddressFamily != subnetAddress.AddressFamily)
         {
@@ -26,7 +30,10 @@ internal static class IPAddressExtensions
 
             uint mask = uint.MaxValue << (32 - prefixLength);
             uint ipAddr = BitConverter.ToUInt32(address.GetAddressBytes().Reverse().ToArray(), 0);
-            uint subnetAddr = BitConverter.ToUInt32(subnetAddress.GetAddressBytes().Reverse().ToArray(), 0);
+            uint subnetAddr = BitConverter.ToUInt32(
+                subnetAddress.GetAddressBytes().Reverse().ToArray(),
+                0
+            );
 
             return (ipAddr & mask) == (subnetAddr & mask);
         }

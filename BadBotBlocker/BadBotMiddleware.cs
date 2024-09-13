@@ -1,26 +1,36 @@
+using System.Net;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using System.Net;
 
 namespace BadBotBlocker;
 
+/// <summary>
+/// Represents the middleware for blocking bad bots.
+/// </summary>
 public sealed partial class BadBotMiddleware
 {
     private readonly RequestDelegate next;
     private readonly List<IPatternMatcher> badBotMatchers;
     private readonly List<(IPAddress NetworkAddress, int PrefixLength)> blockedIPRanges;
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BadBotMiddleware"/> class.
+    /// </summary>
+    /// <param name="next">The next middleware delegate.</param>
+    /// <param name="options">The options for the BadBotMiddleware.</param>
     public BadBotMiddleware(RequestDelegate next, IOptions<BadBotOptions> options)
     {
         this.next = next;
 
         var badBotOptions = options.Value;
 
-        this.badBotMatchers = badBotOptions.BadBotPatterns.Select(pattern =>
-            IsStartsWithPattern(pattern)
-                ? new StartsWithPatternMatcher(pattern.TrimStart('^')) as IPatternMatcher
-                : new RegexPatternMatcher(pattern)
-        ).ToList();
+        this.badBotMatchers = badBotOptions
+            .BadBotPatterns.Select(pattern =>
+                IsStartsWithPattern(pattern)
+                    ? new StartsWithPatternMatcher(pattern.TrimStart('^')) as IPatternMatcher
+                    : new RegexPatternMatcher(pattern)
+            )
+            .ToList();
 
         this.blockedIPRanges = badBotOptions.BlockedIPRanges;
     }
@@ -38,6 +48,11 @@ public sealed partial class BadBotMiddleware
         return !SpecialCharacterPattern().IsMatch(trimmedPattern);
     }
 
+    /// <summary>
+    /// Invokes the middleware.
+    /// </summary>
+    /// <param name="context">The HTTP context.</param>
+    /// <returns>A task representing the asynchronous operation.</returns>
     public async Task InvokeAsync(HttpContext context)
     {
         // Check IP address
