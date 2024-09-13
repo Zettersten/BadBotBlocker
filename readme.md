@@ -2,7 +2,7 @@
 
 # BadBotBlocker 🛡️
 
-[![NuGet Badge](https://buildstats.info/nuget/BadBotBlocker)](https://www.nuget.org/packages/BadBotBlocker/)
+[![NuGet version](https://badge.fury.io/nu/BadBotBlocker.svg)](https://badge.fury.io/nu/BadBotBlocker)
 
 Welcome to the **BadBotBlocker** ASP.NET Core middleware! This library provides an efficient and customizable way to block malicious bots, scrapers, and unwanted traffic based on User-Agent patterns and IP ranges. It leverages a popular list of rules from an `.htaccess` file and focuses on extreme performance using the latest C# features.
 
