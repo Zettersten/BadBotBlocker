@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 
 namespace BadBotBlocker;
@@ -5,18 +6,14 @@ namespace BadBotBlocker;
 /// <summary>
 /// Represents a regular expression pattern matcher.
 /// </summary>
-public class RegexPatternMatcher : IPatternMatcher
+/// <remarks>
+/// Initializes a new instance of the <see cref="RegexPatternMatcher"/> class with the specified pattern.
+/// </remarks>
+/// <param name="pattern">The regular expression pattern.</param>
+public class RegexPatternMatcher([StringSyntax(StringSyntaxAttribute.Regex)] string pattern)
+    : IPatternMatcher
 {
-    private readonly Regex regex;
-
-    /// <summary>
-    /// Initializes a new instance of the <see cref="RegexPatternMatcher"/> class with the specified pattern.
-    /// </summary>
-    /// <param name="pattern">The regular expression pattern.</param>
-    public RegexPatternMatcher(string pattern)
-    {
-        this.regex = new Regex(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
-    }
+    private readonly Regex regex = new(pattern, RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
     /// <summary>
     /// Determines whether the specified input matches the regular expression pattern.
